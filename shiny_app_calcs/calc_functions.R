@@ -9,13 +9,14 @@ alpha_fun <- function(ppv,n_E,n_S,alpha=0.025,delta=0.05,tfr_B=0.1,tfr_NB=0.1){
 }
 
 ### Sample size ###
-compute_sample_size <- function(power,tfr,delta,alpha){
+compute_sample_size <- function(power, tfr, delta, alpha){
   # assumed the treatment failure rate is the same in both trial arms
-  ceiling((qnorm(1-alpha)+qnorm(power))^2*(2*tfr*(1-tfr))/(delta^2))
+  ceiling((qnorm(1 - alpha) + qnorm(power)) ^ 2 * 
+            (2 * tfr * (1 - tfr)) / (delta ^ 2))
 }
 compute_sample_size2 <- function(idx,power,tfr,delta,alpha){
   # assumed the treatment failure rate is the same in both trial arms
-  return((qnorm(1-alpha)+qnorm(power))^2*(2*tfr[idx]*(1-tfr[idx]))/(delta[idx]^2))
+  return(compute_sample_size(power, tfr[idx], delta[idx], alpha))
 }
 
 ### Power ###
@@ -66,6 +67,8 @@ t_corr <- function(n_FS, n_S, n_FE, n_E, ppv,
   tfr_BE_sim[tfr_BE_sim < 0] <- 0
   # compute simulated treatment difference in bacterial infections
   t_sims <- tfr_BE_sim - tfr_BS_sim
+  p1 <- alpha / 2
+  p2 <- 1 - alpha / 2
   # return
   return(c(est = t, ci.lb = quantile(t_sims, alpha / 2),
            ci.ub = quantile(t_sims, 1 - alpha / 2)))
