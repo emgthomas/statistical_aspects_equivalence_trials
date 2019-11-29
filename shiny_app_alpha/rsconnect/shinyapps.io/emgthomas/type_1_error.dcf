@@ -1,0 +1,12 @@
+name: type_1_error
+title: type_1_error
+username:
+account: emgthomas
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 900257
+bundleId: 2049781
+url: https://emgthomas.shinyapps.io/type_1_error/
+when: 1556633192.98866
+asMultiple: FALSE
+asStatic: FALSE

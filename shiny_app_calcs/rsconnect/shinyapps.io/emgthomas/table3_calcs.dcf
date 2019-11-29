@@ -1,0 +1,12 @@
+name: table3_calcs
+title: table3_calcs
+username:
+account: emgthomas
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1040664
+bundleId: 2248147
+url: https://emgthomas.shinyapps.io/table3_calcs/
+when: 1563561007.58164
+asMultiple: FALSE
+asStatic: FALSE
