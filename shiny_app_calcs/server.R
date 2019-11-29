@@ -30,9 +30,9 @@ shinyServer(
                                delta=input$delta,alpha=input$alpha)
 
         # corrected estimate
-        t_corr.max <- t_corr_sims(n_FS=input$n_FS,n_S=input$n_S,n_FE=input$n_FE,n_E=input$n_E,
+        t_corr.max <- t_corr(n_FS=input$n_FS,n_S=input$n_S,n_FE=input$n_FE,n_E=input$n_E,
                                   ppv=ppv.min,tfr_NB=input$tfr_NB,alpha=0.05,nsims=1E5)
-        t_corr.min <- t_corr_sims(n_FS=input$n_FS,n_S=input$n_S,n_FE=input$n_FE,n_E=input$n_E,
+        t_corr.min <- t_corr(n_FS=input$n_FS,n_S=input$n_S,n_FE=input$n_FE,n_E=input$n_E,
                                   ppv=ppv.max,tfr_NB=input$tfr_NB,alpha=0.05,nsims=1E5)
         
         # required sample size

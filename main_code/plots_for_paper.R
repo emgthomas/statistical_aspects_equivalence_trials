@@ -14,10 +14,6 @@ type1_error_dat <- function(p=seq(0,0.2,0.001),spec=c(0.6,0.8),sens=0.8,n,alpha,
   alpha.min <- sapply(ppv.max,alpha_fun,n_E=n_E,n_S=n_S,alpha=alpha,delta=delta,tfr_B=tfr_B,tfr_NB=tfr_NB)
   alpha.max <- sapply(ppv.min,alpha_fun,n_E=n_E,n_S=n_S,alpha=alpha,delta=delta,tfr_B=tfr_B,tfr_NB=tfr_NB)
   dat <- data.frame(p=p,alpha.min=alpha.min,alpha.max=alpha.max,trial=trial)
-  # ggplot(dat,aes(x=p)) + geom_ribbon(aes(ymin=alpha.min,ymax=alpha.max)) +
-  #   ylab("Type 1 Error") + xlab("Prevalence") +
-  #   scale_x_continuous(limits=c(0,max(p))) + scale_y_continuous(limits=c(0,1)) +
-  #   theme_bw()
   return(dat)
 }
 
@@ -60,8 +56,6 @@ sample_size_dat <- function(p=seq(0,0.2,0.001),spec=c(0.6,0.8),sens=0.8,alpha,po
 height <- 3
 width <- 3.2
 length.out <- 1000
-
-sink(file="./results/trial_calcs.txt")
 
 n_test <- 5000
 theta_test <- 0.7
@@ -126,9 +120,9 @@ c(power.min=power.min,power.max=power.max)
 
 cat("\n\n(3) Corrected estimate")
 cat("\n\n Using minimum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 cat("\n\n Using maximum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 
 cat("\n\n(4) True required sample size\n\n")
 delta.min <-  delta*ppv.min
@@ -208,9 +202,9 @@ c(power.min=power.min,power.max=power.max)
 
 cat("\n\n(3) Corrected estimate")
 cat("\n\n Using minimum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 cat("\n\n Using maximum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 
 cat("\n\n(4) True required sample size\n\n")
 delta.min <-  delta*ppv.min
@@ -288,9 +282,9 @@ c(power.min=power.min,power.max=power.max)
 
 cat("\n\n(3) Corrected estimate")
 cat("\n\n Using minimum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 cat("\n\n Using maximum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 
 cat("\n\n(4) True required sample size\n\n")
 delta.min <-  delta*ppv.min
@@ -369,9 +363,9 @@ c(power.min=power.min,power.max=power.max)
 
 cat("\n\n(3) Corrected estimate")
 cat("\n\n Using minimum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.min,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 cat("\n\n Using maximum PPV:\n")
-t_corr_sims(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
+t_corr(n_FS=n_FS,n_S=n_S,n_FE=n_FE,n_E=n_E,ppv=ppv.max,tfr_NB=tfr_NB,alpha=0.05,nsims=1E5)
 
 cat("\n\n(4) True required sample size\n\n")
 delta.min <-  delta*ppv.min
@@ -405,9 +399,6 @@ samplesize.df <- rbind(samplesize.df,
                                        tfr_B=tfr_B,tfr_NB=tfr_NB,
                                        delta=delta,trial="Baqui et al. (2015)")
 )
-
-######### Close sink ###########
-sink()
 
 ######### Plotting ###########
 transparency <- 0.3

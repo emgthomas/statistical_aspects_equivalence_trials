@@ -1,0 +1,166 @@
+
+
+n_test=5000
+
+
+theta_test=0.7
+
+
+############## ~.~ Mir et al 2017 ~.~ ##############
+
+
+
+(1) Type I Error Rate corrected for NBIs
+
+alpha.min alpha.max 
+0.6370950 0.8261315 
+
+
+(2) Power corrected for NBIs
+
+ power.min  power.max 
+0.02989625 0.09866684 
+
+
+(3) Corrected estimate
+
+ Using minimum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+ -0.1385657  -0.9374523   0.7452783 
+
+
+ Using maximum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+-0.08723500 -0.20696373  0.05189103 
+
+
+(4) True required sample size
+
+  n.min   n.max 
+  17585 1312447 
+
+
+(5) Required specificity for sample size of n_test and sensitivity of theta_test
+
+[1] 0.9936961
+[1] 0.9664358
+
+
+############## ~.~ Tshefu et al 2015a ~.~ ##############
+
+
+
+(1) Type I Error Rate corrected for NBIs
+
+alpha.min alpha.max 
+0.8224106 0.9703155 
+
+
+(2) Power corrected for NBIs
+
+ power.min  power.max 
+0.03195233 0.13995765 
+
+
+(3) Corrected estimate
+
+ Using minimum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+ -0.4905981  -1.0000000   0.4048680 
+
+
+ Using maximum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+-0.08674193 -0.18495284  0.02278018 
+
+
+(4) True required sample size
+
+ n.min  n.max 
+ 12173 820478 
+
+
+(5) Required specificity for sample size of n_test and sensitivity of theta_test
+
+[1] 0.9931024
+[1] 0.9632749
+
+
+############## ~.~ Tshefu et al 2015b ~.~ ##############
+
+
+
+(1) Type I Error Rate corrected for NBIs
+
+alpha.min alpha.max 
+0.6054044 0.7990638 
+
+
+(2) Power corrected for NBIs
+
+ power.min  power.max 
+0.02981503 0.09565190 
+
+
+(3) Corrected estimate
+
+ Using minimum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+ -0.6162973  -1.0000000   0.5375372 
+
+
+ Using maximum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+-0.11686356 -0.27017350  0.03728034 
+
+
+(4) True required sample size
+
+  n.min   n.max 
+  21153 1544572 
+
+
+(5) Required specificity for sample size of n_test and sensitivity of theta_test
+
+[1] 0.9941668
+[1] 0.968942
+
+
+############## ~.~ Baqui et al 2015 ~.~ ##############
+
+
+
+(1) Type I Error Rate corrected for NBIs
+
+alpha.min alpha.max 
+0.7402189 0.9197840 
+
+
+(2) Power corrected for NBIs
+
+ power.min  power.max 
+0.03076548 0.11539603 
+
+
+(3) Corrected estimate
+
+ Using minimum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+ -0.4025517  -1.0000000   0.5530489 
+
+
+ Using maximum PPV:
+        est  ci.lb.2.5% ci.ub.97.5% 
+-0.06782549 -0.18751154  0.05878064 
+
+
+(4) True required sample size
+
+  n.min   n.max 
+  14400 1024367 
+
+
+(5) Required specificity for sample size of n_test and sensitivity of theta_test
+
+[1] 0.9933694
+[1] 0.9646967

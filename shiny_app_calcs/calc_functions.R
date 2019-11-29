@@ -36,66 +36,58 @@ ppv_fun <- function(prev,sens,spec){
 }
 
 ### Corrected estimate and CI ###
-t_corr <- function(n_FS,n_S,n_FE,n_E,ppv,tfr_NB){
-  
-  # get bounds for calculating ML estimates
-  lims <- c(tfr_NB*(1-ppv),tfr_NB*(1-ppv) + ppv)
-  
-  # compute TFR in standard arm
-  if(n_FS/n_S < lims[1]){
-    tfr_SB <- 0
-  } else if(n_FS/n_S > lims[2]){
-    tfr_SB <- 1
-  } else {
-    tfr_SB <- (n_FS - n_S*tfr_NB*(1-ppv))/(n_S*ppv)
-  }
-  
-  # compute TFR in experimental arm
-  if(n_FE/n_E < lims[1]){
-    tfr_EB <- 0
-  } else if(n_FE/n_E > lims[2]){
-    tfr_EB <- 1
-  } else {
-    tfr_EB <- (n_FE - n_E*tfr_NB*(1-ppv))/(n_E*ppv)
-  }
-  
-  # treatment difference
-  t <- tfr_SB - tfr_EB
-  
+tfr_corr <- function(n_F, n, ppv, tfr_NB) (n_F - n * tfr_NB * (1 - ppv)) / (n * ppv)
+t_corr <- function(n_FS, n_S, n_FE, n_E, ppv, 
+                        tfr_NB, nsims = 10000, alpha = 0.05){
+  # compute TFR in standard arm for bacterial infections
+  tfr_BS <- tfr_corr(n_FS, n_S, ppv, tfr_NB)
+  if (tfr_BS > 1) tfr_BS <- 1
+  if (tfr_BS < 0) tfr_BS <- 0
+  # compute TFR in experimental arm for bacterial infections
+  tfr_BE <- tfr_corr(n_FE, n_E, ppv, tfr_NB)
+  if (tfr_BE > 1) tfr_BE <- 1
+  if (tfr_BE < 0) tfr_BE <- 0
+  # treatment difference in bacterial infections
+  t <- tfr_BE - tfr_BS
+  # overall  TFR in standard arm
+  tfr_S <- tfr_BS * ppv + tfr_NB * (1 - ppv)
+  # overall  TFR in experimental arm
+  tfr_E <- tfr_BE * ppv + tfr_NB * (1 - ppv)
+  # Simulate
+  n_FS_sim <- rbinom(n = nsims, size = n_S, prob = tfr_S)
+  n_FE_sim <- rbinom(n = nsims, size = n_E, prob = tfr_E)
+  # compute simulated estimate of TFR in standard arm for bacterial infections
+  tfr_BS_sim <- tfr_corr(n_F = n_FS_sim, n = n_S, ppv = ppv, tfr_NB = tfr_NB)
+  tfr_BS_sim[tfr_BS_sim > 1] <- 1
+  tfr_BS_sim[tfr_BS_sim < 0] <- 0
+  # compute simulated estimate of TFR in experimental arm for bacterial infections
+  tfr_BE_sim <- tfr_corr(n_F = n_FE_sim, n = n_E, ppv = ppv, tfr_NB = tfr_NB)
+  tfr_BE_sim[tfr_BE_sim > 1] <- 1
+  tfr_BE_sim[tfr_BE_sim < 0] <- 0
+  # compute simulated treatment difference in bacterial infections
+  t_sims <- tfr_BE_sim - tfr_BS_sim
   # return
-  return(t)
-  
-}
-
-t_corr_sims <- function(n_FS,n_S,n_FE,n_E,ppv,tfr_NB,nsims=10000,alpha=0.05){
-  # estimate
-  t <- t_corr(n_FS,n_S,n_FE,n_E,ppv,tfr_NB)
-  # CI by simulation
-  n_FS_sim <- rbinom(n=nsims,size=n_S,prob=n_FS/n_S)
-  n_FE_sim <- rbinom(n=nsims,size=n_E,prob=n_FE/n_E)
-  t_sims <- mapply(t_corr,n_FS=n_FS_sim,n_FE=n_FE_sim,
-                   MoreArgs=list(n_S=n_S,n_E=n_E,ppv=ppv,tfr_NB=tfr_NB))
-  # return
-  return(c(est=t,ci.lb=quantile(t_sims,alpha/2),ci.ub=quantile(t_sims,1-alpha/2)))
+  return(c(est = t, ci.lb = quantile(t_sims, alpha / 2),
+           ci.ub = quantile(t_sims, 1 - alpha / 2)))
 }
 
 ### Sensitivity and specificity for given n, p ###
-PPV_solve <- function(tfr_NB,tfr_B,alpha,power,n,delta){
-  A <- n*delta^2/(2*(qnorm(1-alpha) + qnorm(power))^2)
-  a <- -A - (tfr_B - tfr_NB)^2
-  b <- (1-2*tfr_NB)*(tfr_B- tfr_NB)
-  c <- tfr_NB*(1-tfr_NB)
-  d <- b^2 - 4*a*c
+PPV_solve <- function(tfr_NB, tfr_B, alpha, power, n, delta) {
+  A <- n * delta ^ 2 / (2 * (qnorm(1 - alpha) + qnorm(power)) ^ 2)
+  a <- - A - (tfr_B - tfr_NB) ^ 2
+  b <- (1 - 2 * tfr_NB) * (tfr_B - tfr_NB)
+  c <- tfr_NB * (1 - tfr_NB)
+  d <- b ^ 2 - 4 * a * c
   if(d < 0) return("no solutions")
-  solns <- c((-b-sqrt(d))/(2*a),(-b+sqrt(d))/(2*a))
-  solns <- solns[solns>0 & solns <1]
-  if(length(solns>0)){
+  solns <- c((- b - sqrt(d)) / (2 * a),(-b + sqrt(d)) / (2 * a))
+  solns <- solns[solns > 0 & solns < 1]
+  if(length(solns > 0)) {
     return(solns)
   }  else {
     return("no solutions in range [0,1]")
   }
 }
-sens_solve <- function(p,PPV,theta){
-  a <- p*(1-PPV)/(1-p)
-  return(1- a*theta)
+sens_solve <- function(p, PPV, theta){
+  a <- p * (1 - PPV) / (1 - p)
+  return(1 - a * theta)
 }
