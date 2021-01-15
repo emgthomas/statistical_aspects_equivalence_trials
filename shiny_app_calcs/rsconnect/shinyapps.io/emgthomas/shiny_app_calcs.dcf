@@ -1,0 +1,12 @@
+name: shiny_app_calcs
+title: shiny_app_calcs
+username:
+account: emgthomas
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1577381
+bundleId: 4098145
+url: https://emgthomas.shinyapps.io/shiny_app_calcs/
+when: 1610672695.4567
+asMultiple: FALSE
+asStatic: FALSE

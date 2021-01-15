@@ -97,8 +97,8 @@ shinyServer(
                xaxis = list(type="log"),
                             # range = c(min(inputs$power_df$ppv),max(inputs$power_df$ppv))), 
                showlegend=F) %>%
-        layout(yaxis = list(title="Sample Size Per Trial Arm\n"), 
-               xaxis = list(title="\nPositive Predictive Value (PPV)"), showlegend=F) %>%
+        layout(yaxis = list(title="Sample size per trial arm\n"), 
+               xaxis = list(title="\nPPV"), showlegend=F) %>%
         layout(yaxis = ax, xaxis=ax, margin=m) %>%
         add_segments(x = min(inputs$power_df$ppv), xend = max(inputs$power_df$ppv), 
                      y = inputs$usual_n, yend = inputs$usual_n, 
